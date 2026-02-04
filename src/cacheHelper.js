@@ -1,19 +1,40 @@
 const Redis = require('ioredis');
 
- 
-const redis = new Redis(process.env.REDIS_URL);
+let redis;
 
-function getredisURL() {
-    console.log("redis url");
-    console.log(process.env.REDIS_URL);
+function getRedisClient() {
+  if (!redis) {
+    if (!process.env.REDIS_URL) {
+      console.warn('⚠️ REDIS_URL not set. Cache disabled.');
+      return null;
+    }
 
+    console.log('🔌 Connecting to Redis:', process.env.REDIS_URL);
+
+    redis = new Redis(process.env.REDIS_URL);
+
+    redis.on('connect', () => {
+      console.log('✅ Redis connected');
+    });
+
+    redis.on('error', (err) => {
+      console.error('❌ Redis error:', err.message);
+    });
+  }
+
+  return redis;
 }
- getredisURL();
+
 exports.setCache = async (key, value, ttl) => {
-  await redis.set(key, JSON.stringify(value), 'EX', ttl);
+  const client = getRedisClient();
+  if (!client) return;
+  await client.set(key, JSON.stringify(value), 'EX', ttl);
 };
- 
+
 exports.getCache = async (key) => {
-  const value = await redis.get(key);
+  const client = getRedisClient();
+  if (!client) return null;
+
+  const value = await client.get(key);
   return value ? JSON.parse(value) : null;
 };
