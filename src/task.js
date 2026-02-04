@@ -1,4 +1,4 @@
-require('dotenv').config();
+
 const { getCache, setCache } = require('./cacheHelper');
 const nodemailer = require('nodemailer');
 
