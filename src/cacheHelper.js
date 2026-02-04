@@ -4,14 +4,14 @@ let redis;
 
 function getRedisClient() {
   if (!redis) {
-    if (!process.env.REDIS_URL) {
+    if (!process.env.REDISCLOUD_URL) {
       console.warn('⚠️ REDIS_URL not set. Cache disabled.');
       return null;
     }
 
-    console.log('🔌 Connecting to Redis:', process.env.REDIS_URL);
+    console.log('🔌 Connecting to Redis:', process.env.REDISCLOUD_URL);
 
-    redis = new Redis(process.env.REDIS_URL);
+    redis = new Redis(process.env.REDISCLOUD_URL);
 
     redis.on('connect', () => {
       console.log('✅ Redis connected');
