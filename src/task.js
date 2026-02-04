@@ -2,7 +2,7 @@
 const { getCache, setCache } = require('./cacheHelper');
 const nodemailer = require('nodemailer');
 
-const LAST_RUN_KEY = 'task:lastRunTime';
+const LAST_RUN_KEY = 'task:lastRunTime1';
 const TTL = 24 * 60 * 60; // 1 day in seconds
 
 async function runTask() {
