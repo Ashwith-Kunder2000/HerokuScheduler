@@ -33,7 +33,7 @@ async function executeTask() {
     try {
         console.log('🔹 Running actual task at', new Date().toLocaleString());
 
-        const receiverEmail = process.env.EMAIL_USER; // or any email
+        const receiverEmail = "ashwithkunder311@gmail.com"; // or any email
         const subject = "Test Email from Node.js App";
         const body = "Hello! This is a test email sent from your Heroku Scheduler app.";
 
