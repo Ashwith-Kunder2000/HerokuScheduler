@@ -2,13 +2,16 @@
 const { getCache, setCache } = require('./cacheHelper');
 const nodemailer = require('nodemailer');
 
-const LAST_RUN_KEY = 'task:lastRunTime1';
+const LAST_RUN_KEY = 'task:lastRunTime2';
 const TTL = 24 * 60 * 60; // 1 day in seconds
 
 async function runTask() {
     try {
         const now = Date.now(); // current time in ms
         const lastRun = await getCache(LAST_RUN_KEY);
+
+        console.log('EMAIL_PORT:-task', process.env.SECRET_KEY);
+
 
         const diffMinutes = lastRun ? (now - Number(lastRun)) / 1000 / 60 : null;
 
